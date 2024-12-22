@@ -4,6 +4,9 @@ import Link from "next/link"
 import { AudioLines, Disc3, Music4 } from "lucide-react"
 import Image from "next/image"
 import Header from "@/components/Header"
+import Playlist from "@/components/Playlist"
+import AudioPlayer from "@/components/AudioPlayer"
+
 export default function Home() {
   const songs = db.prepare("SELECT * FROM songs").all()
   return (
@@ -17,9 +20,8 @@ export default function Home() {
           </h1>
           <p>The platform for upload and listen music together with your friends.</p>
           <div className="flex items-center gap-2">
-            <p className="text-xl">Start</p>
             <Link href="/account" className="mt-1">
-              <Button size="large" icon={<Image src="/google.webp" width={30} height={30} alt="Sign In with Google" />}>Sign in with Google</Button>
+              <Button size="large" icon={<Image src="/google.webp" width={30} height={30} alt="Sign In with Google" />}>Start Sign In with Google</Button>
             </Link>
           </div>
         </div>
@@ -28,12 +30,8 @@ export default function Home() {
           <Music4 className="w-72 h-72 text-blue-600 absolute right-[105px] top-[100px]" />
         </div>
       </section>
-      {songs.map((song: any, index) => (
-        <div className="border flex items-center justify-between w-96" key={index}>
-          <p>{song.name}</p>
-          <p>{song.song}</p>
-        </div>
-      ))}
+      <Playlist playlist={songs} />
+      <AudioPlayer />
     </main>
   );
 }

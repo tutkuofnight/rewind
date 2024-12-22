@@ -1,3 +1,8 @@
 import { atom } from "jotai"
+import { PlayerState, Song } from "@/types"
 
-export const counter = atom<number>(0)
+export const playerState = atom<PlayerState | null>(null)
+
+export const currentPlaying = atom<Song | null>(null)
+
+export const search = atom<string>("")

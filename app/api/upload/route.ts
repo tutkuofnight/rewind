@@ -18,7 +18,7 @@ export async function POST(req:Request, res: Response) {
         (id, name, artist, featurings, song) 
         VALUES (?, ?, ?, ?, ?)
     `)
-    query.run(v4(), formData.get("name"), formData.get("artist"), formData.get("featurings"), filePath)
+    query.run(v4(), formData.get("name"), formData.get("artist"), formData.get("featurings"), file.name)
 
     return Response.json({
         message: "successfully uploaded"
