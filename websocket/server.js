@@ -17,8 +17,12 @@ const port = 3001
 io.on("connection", (socket) => {
     console.log("a user connected")
 
-    socket.on("play", (data) => {
-        socket.broadcast.emit("play", data)
+    socket.on("set", (data) => {
+        socket.broadcast.emit("set", data)
+    })
+
+    socket.on("play", (state) => {
+        socket.broadcast.emit("play", state)
     })
 
 })

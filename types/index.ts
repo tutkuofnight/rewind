@@ -12,8 +12,8 @@ export type Song = {
     song: string
 }
 export type PlayerState = {
-    isPlaying: boolean | null,
-    minutes: number | null
+    isPlaying?: boolean | null,
+    minutes?: number | null
 }
 
 export type Playlist = {
