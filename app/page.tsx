@@ -1,11 +1,10 @@
 import db from "@/config/db"
-import { Button } from "antd"
-import Link from "next/link"
+// import { Button } from "antd"
 import { AudioLines, Disc3, Music4 } from "lucide-react"
-import Image from "next/image"
 import Header from "@/components/Header"
 import Playlist from "@/components/Playlist"
 import AudioPlayer from "@/components/AudioPlayer"
+import Auth from "@/components/Auth"
 
 export default function Home() {
   const songs = db.prepare("SELECT * FROM songs").all()
@@ -20,9 +19,7 @@ export default function Home() {
           </h1>
           <p>The platform for upload and listen music together with your friends.</p>
           <div className="flex items-center gap-2">
-            <Link href="/account" className="mt-1">
-              <Button size="large" icon={<Image src="/google.webp" width={30} height={30} alt="Sign In with Google" />}>Start Sign In with Google</Button>
-            </Link>
+            <Auth />
           </div>
         </div>
         <div className="flex h-full items-center">

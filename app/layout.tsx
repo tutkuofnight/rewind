@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ConfigProvider } from "antd"
 import StoreProvider from "@/store/StoreProvider";
-
+import SessionProvider from "@/components/providers/SessionProvider"
 import "./globals.css";
 
 const geistSans = Geist({
@@ -44,9 +44,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ConfigProvider>
           <AntdRegistry>
-            <StoreProvider>
-              {children}
-            </StoreProvider>
+            <SessionProvider>
+              <StoreProvider>
+                {children}
+              </StoreProvider>
+            </SessionProvider>
           </AntdRegistry>
         </ConfigProvider>
       </body>

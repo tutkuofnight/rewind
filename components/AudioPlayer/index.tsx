@@ -1,16 +1,13 @@
 "use client"
 import { useEffect, useRef, useState } from "react"
-import { useAtom } from "jotai"
-import { currentPlaying, playerState } from "@/store"
 import useSocket from "@/hooks/useSocket"
 import { Play, Pause } from "lucide-react"
+import { Slider } from "antd"
 
 export default function () {
-  const [currentTrack, setCurrentTrack] = useAtom(currentPlaying)
-  const [state, setState] = useAtom(playerState)
   const [playerDuration, setPlayerDuration] = useState<number>(0)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-  const { playMusic, pauseMusic } = useSocket()
+  const audioRef = useRef<HTMLMediaElement>(null)
+  const { playMusic, pauseMusic, timeSeeked, audioPlayerState, currentTrack } = useSocket()
 
   useEffect(() => {
     const audio: any = audioRef.current
@@ -18,18 +15,16 @@ export default function () {
       audioRef.current?.focus()
 
       const handleLoadedMetadata = (e: any) => {
-        console.log(e.target.duration)
+        console.log(e)
         const audio = audioRef.current;
         audio?.play()
       };
   
       audio.addEventListener('loadedmetadata', handleLoadedMetadata);
       audio.addEventListener('timeupdate', (e: any) => setPlayerDuration(e.target.currentTime))
-      audio.addEventListener('seeked', (e: any) => {
-        if (audioRef.current){
-          audioRef.current.currentTime = e.target.currentTime
-        }
-      })
+      audio.addEventListener('play', () => playMusic())
+      audio.addEventListener('pause', () => pauseMusic())
+      audio.addEventListener('seeked', (e: any) => timeSeeked(e.target.currentTime))
       return () => {
         audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       };
@@ -38,25 +33,28 @@ export default function () {
 
   useEffect(() => {
     if (audioRef.current) {
-      if(state?.isPlaying) {
+      if(audioPlayerState?.isPlaying) {
         audioRef.current.play()
       } else {
         audioRef.current.pause()
       }
     }
+  }, [audioPlayerState?.isPlaying])
 
-  }, [state?.isPlaying])
+  // useEffect(() => {
+  //   if (audioRef.current) {
+  //     audioRef.current.currentTime = audioPlayerState?.timeSeeked
+  //   }
+  // }, [audioPlayerState?.timeSeeked])
 
   return <>{currentTrack ? (
     <div>
-      {/* <Slider defaultValue={0} max={audioRef.current?.duration} step={0.000001} value={playerDuration} onChange={(value) => {
-        setPlayerDuration(value)
-      }} /> */}
+      <Slider defaultValue={0} max={audioRef.current?.duration} step={0.000001} value={playerDuration} />
       <audio ref={audioRef} controls src={"uploads/" + currentTrack.song}></audio>
-      <button onClick={() => playMusic(true)}>
+      <button onClick={() => playMusic()}>
         <Play />
       </button>
-      <button onClick={() => pauseMusic(false)}>
+      <button onClick={() => pauseMusic()}>
         <Pause />
       </button>
     </div>

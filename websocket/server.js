@@ -24,7 +24,14 @@ io.on("connection", (socket) => {
     socket.on("play", (state) => {
         socket.broadcast.emit("play", state)
     })
+    
+    socket.on("pause", (state) => {
+        socket.broadcast.emit("pause", state)
+    })
 
+    socket.on("timeSeeked", (duration) => {
+        socket.broadcast.emit("timeSeeked", duration)
+    })
 })
 
 server.listen(port, () => {
