@@ -1,8 +1,9 @@
 "use client"
 import { useEffect, useRef, useState } from "react"
 import useSocket from "@/hooks/useSocket"
-import { Play, Pause } from "lucide-react"
-import { Slider } from "antd"
+// import { Play, Pause } from "lucide-react"
+// import { Slider } from "antd"
+import { getVolume, setVolume } from "./functions"
 
 export default function () {
   const [playerDuration, setPlayerDuration] = useState<number>(0)
@@ -21,10 +22,10 @@ export default function () {
       };
   
       audio.addEventListener('loadedmetadata', handleLoadedMetadata);
-      audio.addEventListener('timeupdate', (e: any) => setPlayerDuration(e.target.currentTime))
-      audio.addEventListener('play', () => playMusic())
-      audio.addEventListener('pause', () => pauseMusic())
-      audio.addEventListener('seeked', (e: any) => timeSeeked(e.target.currentTime))
+      // audio.addEventListener('timeupdate', (e: any) => setPlayerDuration(e.target.currentTime))
+      audio.addEventListener('play', playMusic)
+      audio.addEventListener('pause', pauseMusic)
+      audio.addEventListener('seeked', () => timeSeeked(audioRef.current?.currentTime))
       return () => {
         audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       };
@@ -34,6 +35,10 @@ export default function () {
   useEffect(() => {
     if (audioRef.current) {
       if(audioPlayerState?.isPlaying) {
+        const volume = getVolume()
+        if (typeof volume === 'number' && isFinite(volume)) {
+          audioRef.current.volume = volume
+        }
         audioRef.current.play()
       } else {
         audioRef.current.pause()
@@ -41,22 +46,30 @@ export default function () {
     }
   }, [audioPlayerState?.isPlaying])
 
-  // useEffect(() => {
-  //   if (audioRef.current) {
-  //     audioRef.current.currentTime = audioPlayerState?.timeSeeked
-  //   }
-  // }, [audioPlayerState?.timeSeeked])
+  useEffect(() => {
+    if (typeof audioPlayerState?.currentTime === 'number' && isFinite(audioPlayerState.currentTime)) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = audioPlayerState.currentTime
+      }
+    }
+  }, [audioPlayerState?.currentTime])
 
   return <>{currentTrack ? (
-    <div>
-      <Slider defaultValue={0} max={audioRef.current?.duration} step={0.000001} value={playerDuration} />
-      <audio ref={audioRef} controls src={"uploads/" + currentTrack.song}></audio>
-      <button onClick={() => playMusic()}>
+    <div className="w-full p-4 py-5 bg-slate-50 border-t flex items-center justify-center fixed bottom-0 left-0">
+      {/* <Slider defaultValue={0} max={audioRef.current?.duration} step={0.000001} value={playerDuration} /> */}
+      <audio 
+        ref={audioRef} 
+        controls 
+        src={"uploads/" + currentTrack.song} 
+        onVolumeChange={setVolume}
+        className="w-1/3 scale-125"
+        ></audio>
+      {/* <button onClick={() => playMusic()}>
         <Play />
       </button>
       <button onClick={() => pauseMusic()}>
         <Pause />
-      </button>
+      </button> */}
     </div>
   ) : null}</>
 }

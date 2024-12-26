@@ -14,7 +14,7 @@ export type Song = {
 export type PlayerState = {
     isPlaying?: boolean | null,
     minutes?: number | null
-    timeSeeked?: number
+    currentTime?: any
 }
 
 export type Playlist = {
@@ -23,3 +23,16 @@ export type Playlist = {
     songlist?: Song[]
 }
 
+export type UpdateUser = {
+    id: string
+    name: string
+    image: File
+}
+
+export type User = {
+    id: string
+    name: string
+    email: string
+    image: string
+    playlistId?: string
+}

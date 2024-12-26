@@ -21,7 +21,7 @@ const useSocket = () => {
       setAudioPlayerState({ isPlaying: data.state })
     })
     socket.on("timeSeeked", (data) => {
-      setAudioPlayerState({ timeSeeked: data.duration })
+      setAudioPlayerState({ currentTime: data.duration })
     })
   }, [])
 
@@ -41,9 +41,9 @@ const useSocket = () => {
     setAudioPlayerState({ isPlaying: false })
   }
 
-  const timeSeeked = (duration: number) => {
+  const timeSeeked = (duration: any) => {
     socket.emit("timeSeeked", { duration })
-    setAudioPlayerState({ timeSeeked: duration })
+    setAudioPlayerState({ currentTime: duration })
   }
 
   return { setTrack, playMusic, pauseMusic, setAudioPlayerState, timeSeeked, audioPlayerState, currentTrack }

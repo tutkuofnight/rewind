@@ -1,21 +1,16 @@
 "use client";
-import { Song, PlayerState } from "@/types"
-import { currentPlaying, search } from "@/store"
-import { useAtom } from "jotai"
 import useSocket from "@/hooks/useSocket"
+import TrackCard from "@/components/TrackCard"
 
 export default function Playlist({ playlist }: { playlist: any[] }) {
-  // const [currentTrack, setCurrentTrack] = useAtom<Song | null>(currentPlaying)
-  const [searchStr,] = useAtom<string>(search)
   const { setTrack } = useSocket()
 
   return (
     <div>
-      <h2>{searchStr}</h2>
+      <h1 className="text-sm font-bold my-3 p-1 px-2 bg-black text-white inline-block rounded-lg">Your Playlist</h1>
       {playlist.map((song: any, index: number) => (
-        <div className="border flex items-center justify-between w-96" key={index} onClick={() => setTrack(song)}>
-          <p>{song.name}</p>
-          <p>{song.song}</p>
+        <div className="cursor-pointer" key={index} onClick={() => setTrack(song)}>
+          <TrackCard song={song} />
         </div>
       ))}
     </div>
