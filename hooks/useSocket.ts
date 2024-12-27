@@ -10,6 +10,7 @@ const socket = io("ws://localhost:3001");
 const useSocket = () => {
   const [currentTrack, setCurrentTrack] = useAtom(currentPlaying)
   const [audioPlayerState, setAudioPlayerState] = useAtom(playerState)
+  
   useEffect(() => {
     socket.on("set", (data) => {
       setCurrentTrack(data.song)
@@ -24,6 +25,10 @@ const useSocket = () => {
       setAudioPlayerState({ currentTime: data.duration })
     })
   }, [])
+
+  const joinRoom = (id: string) => {
+    socket.emit("join", { id })
+  }
 
   const setTrack = (song: any) => {
     socket.emit("set", { song })
@@ -46,7 +51,7 @@ const useSocket = () => {
     setAudioPlayerState({ currentTime: duration })
   }
 
-  return { setTrack, playMusic, pauseMusic, setAudioPlayerState, timeSeeked, audioPlayerState, currentTrack }
+  return { joinRoom, setTrack, playMusic, pauseMusic, setAudioPlayerState, timeSeeked, audioPlayerState, currentTrack }
 }
 
 export default useSocket

@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import db from "@/config/db"
 import { ExtendedProfile } from "@/types"
+
 const handler = NextAuth({
   providers: [
     GoogleProvider({

@@ -1,3 +1,5 @@
+"use client"
+
 export const getVolume = () => {
   const volume = localStorage.getItem("vol")
   if (volume){

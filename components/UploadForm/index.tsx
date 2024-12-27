@@ -3,7 +3,6 @@ import { useRef } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/hooks/use-toast"
 export default function () {
   const formRef = useRef<HTMLFormElement>(null)
@@ -49,8 +48,8 @@ export default function () {
   }
 
   return (
-    <form className="flex flex-col gap-4 mt-10" ref={formRef} onSubmit={handleFormSubmit}>
-      <h1 className="text-3xl font-bold mb-2">Upload Track</h1>
+    <form className="flex flex-col gap-4" ref={formRef} onSubmit={handleFormSubmit}>
+      <h1 className="text-3xl font-bold">Upload Track</h1>
       <Input type="text" name="name" placeholder="Track Name.." />
       <div className="flex gap-3">
         <Input type="text" name="artist" placeholder="Track Artist.." />

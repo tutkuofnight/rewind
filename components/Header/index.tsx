@@ -1,8 +1,9 @@
 "use client"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
+import { CloudUpload } from "lucide-react"
 import Image from "next/image"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +12,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CloudUpload } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import UploadForm from "../UploadForm"
+import Link from "next/link"
 
 export default function Header() {
   const { data:session, status } = useSession()
@@ -24,15 +32,24 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between w-full p-4 lg:w-[1024px] lg:mx-auto">
-      <h1 className="text-2xl font-logo">Rewind</h1>
+      <Link href="/app">
+        <h1 className="text-2xl font-logo">Rewind</h1>
+      </Link>
       <div className="flex items-center gap-3">
         {
           status == "authenticated" ? (
             <div className="flex items-center gap-4">
-              <Button className="font-bold">
-                <CloudUpload />
-                Upload
-              </Button>
+              <Dialog>
+                <DialogTrigger>
+                  <Button className="font-bold">
+                    <CloudUpload />
+                    Upload
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <UploadForm />
+                </DialogContent>
+              </Dialog>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Image src={session.user?.image as string} alt={session.user?.name as string}  width={36} height={36} className="rounded-full" />

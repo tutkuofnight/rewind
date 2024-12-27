@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS songs (
     artist TEXT NOT NULL,
     featurings TEXT,
     song TEXT
+    userId TEXT NOT NULL UNIQUE
 )    
 `).run()
 

@@ -12,8 +12,6 @@ export default function () {
   useEffect(() => {
     const audio: any = audioRef.current
     if (audio) {
-      audioRef.current?.focus()
-
       const handleLoadedMetadata = (e: any) => {
         console.log(e)
         const audio = audioRef.current;
