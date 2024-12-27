@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react"
 import useSocket from "@/hooks/useSocket"
 // import { Play, Pause } from "lucide-react"
-// import { Slider } from "antd"
 import { getVolume, setVolume } from "./functions"
 
 export default function () {
