@@ -1,9 +1,8 @@
 import db from "@/config/db"
 import { writeFile } from "fs"
 import { v4 } from "uuid"
-import { NextResponse } from "next/server"
 
-export async function POST(req:Request, res: Response) {
+export async function POST(req:Request) {
     const formData = await req.formData()
     const file: File = formData.get("song") as File
 
@@ -21,7 +20,7 @@ export async function POST(req:Request, res: Response) {
     `)
     query.run(v4(), formData.get("name"), formData.get("artist"), formData.get("featurings"), file.name)
 
-    return NextResponse.json({
+    return Response.json({
         message: "successfully uploaded"
     })
 }

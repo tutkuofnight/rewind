@@ -35,7 +35,7 @@ export default function Header() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Image src={session.user?.image} alt={session.user?.name}  width={36} height={36} className="rounded-full" />
+                  <Image src={session.user?.image as string} alt={session.user?.name as string}  width={36} height={36} className="rounded-full" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
