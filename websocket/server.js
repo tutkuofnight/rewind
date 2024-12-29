@@ -17,6 +17,12 @@ const port = 3001
 io.on("connection", (socket) => {
     console.log("a user connected")
 
+    socket.on("join", (data) => {
+        console.log(data)
+        socket.join(data.room)
+        socket.to(data.room).emit("joinedUser", data.user)
+    })
+
     socket.on("set", (data) => {
         socket.broadcast.emit("set", data)
     })
