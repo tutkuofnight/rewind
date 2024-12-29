@@ -13,12 +13,12 @@ export async function POST(req:Request) {
     writeFile(filePath, buffer, null, function(params: any) {
         console.log(params)
     })
-
+    const songId = v4()
     const query = db.prepare(`INSERT INTO songs 
-        (id, name, artist, featurings, song) 
-        VALUES (?, ?, ?, ?, ?)
+        (id, name, artist, featurings, song, userId) 
+        VALUES (?, ?, ?, ?, ?, ?)
     `)
-    query.run(v4(), formData.get("name"), formData.get("artist"), formData.get("featurings"), file.name)
+    query.run(songId, formData.get("name"), formData.get("artist"), formData.get("featurings"), file.name, formData.get("userId"))
 
     return Response.json({
         message: "successfully uploaded"

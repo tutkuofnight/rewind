@@ -36,6 +36,11 @@ export type User = {
     image: string
     playlistId?: string
 }
+
+export type ListenerUser = {
+    name: string
+    image: string
+}
 import { Profile } from "next-auth"
 export interface ExtendedProfile extends Profile {
     picture?: string

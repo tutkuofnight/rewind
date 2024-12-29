@@ -12,7 +12,7 @@ import Link from "next/link"
 
 export default function({ roomId, user }: { roomId: string, user: { name: string, image: string }}){
   return (
-    <div className="w-full h-screen fixed bg-black bg-opacity-70 z-10 grid place-items-center">
+    <div className="w-full h-screen fixed top-0 left-0 bg-black bg-opacity-70 z-10 grid place-items-center">
       <Card className="shadow-2xl">
         <CardHeader>
           <div className="flex flex-col items-center gap-6 relative">
@@ -22,7 +22,7 @@ export default function({ roomId, user }: { roomId: string, user: { name: string
             </div>
             <CardTitle>
               <p className="text-2xl">{ user.name }</p>
-              <p className="text-xl">Invited you to listen together!</p>
+              <p className="text-xl">Invited you listen together!</p>
             </CardTitle>
           </div>
         </CardHeader>

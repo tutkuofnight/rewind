@@ -4,6 +4,7 @@ import StoreProvider from "@/store/StoreProvider"
 // import { ThemeProvider } from "@/components/providers/ThemeProvider"
 import SessionProvider from "@/components/providers/SessionProvider"
 import Header from "@/components/Header"
+import { Toaster } from "@/components/ui/toaster"
 
 import "./globals.css"
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <StoreProvider>
             <Header />
             {children}
+            <Toaster />
           </StoreProvider>
         </SessionProvider>
       </body>

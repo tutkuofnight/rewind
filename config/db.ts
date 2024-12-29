@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS songs (
     name TEXT NOT NULL,
     artist TEXT NOT NULL,
     featurings TEXT,
-    song TEXT
-    userId TEXT NOT NULL UNIQUE
+    song TEXT,
+    userId TEXT NOT NULL
 )    
 `).run()
 

@@ -8,7 +8,6 @@ export default function Welcome(){
         <p>Welcome</p>
         <h1>{session?.user?.name}</h1>
       </div>
-      
     </section>
   )
 }

@@ -2,7 +2,7 @@
 import { useEffect } from "react"
 import io from "socket.io-client" 
 
-import { currentPlaying, playerState } from "@/store"
+import { currentPlaying, playerState, roomId } from "@/store"
 import { useAtom } from "jotai"
 
 const socket = io("ws://localhost:3001");
@@ -26,8 +26,8 @@ const useSocket = () => {
     })
   }, [])
 
-  const joinRoom = (id: string) => {
-    socket.emit("join", { id })
+  const joinRoom = (data: { user: { name: string, image: string }, room: string }) => {
+    socket.emit("join", { data })
   }
 
   const setTrack = (song: any) => {
@@ -51,7 +51,7 @@ const useSocket = () => {
     setAudioPlayerState({ currentTime: duration })
   }
 
-  return { joinRoom, setTrack, playMusic, pauseMusic, setAudioPlayerState, timeSeeked, audioPlayerState, currentTrack }
+  return { joinRoom, setTrack, playMusic, pauseMusic, setAudioPlayerState, timeSeeked, audioPlayerState, currentTrack, socket }
 }
 
 export default useSocket

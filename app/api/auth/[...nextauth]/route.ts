@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import db from "@/config/db"
-import { ExtendedProfile } from "@/types"
+import { ExtendedProfile, User } from "@/types"
 
 const handler = NextAuth({
   providers: [
@@ -12,12 +12,9 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session, token }): Promise<any> {
-      let user: any
-      user = db.prepare("SELECT * FROM users WHERE id = ?").get(token.id)
-      if (!user){
-        user = session.user
-      }
-      return { user, expires: session.expires }
+      const user = await db.prepare("SELECT * FROM users WHERE id = ?").get(token.id) as User
+      session.user = user
+      return session
     },
     async jwt({ token, account, profile }) {
       if (account?.provider === 'google' && profile) {

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { useSession, signOut } from "next-auth/react"
 import { CloudUpload } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 import {
   DropdownMenu,
@@ -18,8 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import UploadForm from "../UploadForm"
-import Link from "next/link"
+import UploadForm from "@/components/UploadForm"
 
 export default function Header() {
   const { data:session, status } = useSession()
@@ -40,7 +40,7 @@ export default function Header() {
           status == "authenticated" ? (
             <div className="flex items-center gap-4">
               <Dialog>
-                <DialogTrigger>
+                <DialogTrigger asChild>
                   <Button className="font-bold">
                     <CloudUpload />
                     Upload
