@@ -1,7 +1,7 @@
 "use server"
 import db from "@/config/db"
 import { v4 } from "uuid"
-import { Playlist, UpdateUser } from "@/types"
+import { Playlist, UpdateUser, Song } from "@/types"
 import { cookies } from 'next/headers'
 
 export const saveUser = async (user: any) => {
@@ -46,7 +46,7 @@ export const updateUser = async (user: UpdateUser) => {
   }
 }
 
-export const setCookie = async (userId: any) => {
+export const setCookie = async (userId: string) => {
   const cookieStore = await cookies()
 
   cookieStore.set({
@@ -55,4 +55,9 @@ export const setCookie = async (userId: any) => {
     httpOnly: true,
     path: '/',
   })
+}
+
+export const getPlaylist = async (userId?: string): Promise<Song[]> => {
+  const result = db.prepare("SELECT * FROM songs").all() as Song[]
+  return result
 }

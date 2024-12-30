@@ -4,11 +4,12 @@ import { Song } from "@/types"
 import Client from "./client"
 import AppLayout from "@/layouts/app-layout"
 
-export default function({ params } : { params: { id: string } }) {
-  const songs = db.prepare("SELECT * FROM songs WHERE userId = ?").all(params.id) as Song[]
+export default async function({ params } : { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const songs = db.prepare("SELECT * FROM songs WHERE userId = ?").all(id) as Song[]
   return (
     <AppLayout>
-      <Client roomId={params.id} songs={songs} />
+      <Client roomId={id} songs={songs} />
     </AppLayout>
   )
 }

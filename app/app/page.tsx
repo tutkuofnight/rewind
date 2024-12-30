@@ -5,11 +5,9 @@ import { Song } from "@/types"
 import AppLayout from "@/layouts/app-layout"
 
 export default async function () {
-  const songs = db.prepare("SELECT * FROM songs ").all() as Song[]
   return (
     <AppLayout>
       <Profile />
-      <Playlist playlist={songs} />
     </AppLayout>
   )
 }

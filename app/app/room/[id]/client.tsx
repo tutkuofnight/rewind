@@ -30,7 +30,7 @@ export default function({ roomId, songs }: { roomId: string, songs: Song[] }) {
 
   return (
     <div className="flex">
-      <Playlist playlist={songs} className="flex-1" />
+      <Playlist className="flex-1" />
       <Listeners listeners={listenerUsers} />
     </div>
   )
