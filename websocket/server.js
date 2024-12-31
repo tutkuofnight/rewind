@@ -44,6 +44,12 @@ io.on("connection", (socket) => {
     })
 })
 
+app.get("/", (req, res) => {
+    return res.status(200).json({
+        message: "hi, rewind!"
+    })
+})
+
 server.listen(port, () => {
     console.log(`websocket server running on ${port}`)
 })
