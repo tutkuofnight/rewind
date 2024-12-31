@@ -16,27 +16,31 @@ const port = 3001
 
 io.on("connection", (socket) => {
     console.log("a user connected")
-
-    socket.on("join", (data) => {
-        console.log(data)
-        socket.join(data.room)
-        socket.to(data.room).emit("joinedUser", data.user)
+    let room
+    socket.on("join", ({ data }) => {
+        console.log(data.user, data.room)
+        socket.join(data.room, () => {
+            room = data.room
+            if (data.user) {
+                socket.to(data.room).emit("joinedUser", data.user)
+            }
+        })
     })
 
     socket.on("set", (data) => {
-        socket.broadcast.emit("set", data)
+        socket.to(room).emit("set", data)
     })
 
     socket.on("play", (state) => {
-        socket.broadcast.emit("play", state)
+        socket.to(room).emit("play", state)
     })
     
     socket.on("pause", (state) => {
-        socket.broadcast.emit("pause", state)
+        socket.to(room).emit("pause", state)
     })
 
     socket.on("timeSeeked", (duration) => {
-        socket.broadcast.emit("timeSeeked", duration)
+        socket.to(room).emit("timeSeeked", duration)
     })
 })
 
