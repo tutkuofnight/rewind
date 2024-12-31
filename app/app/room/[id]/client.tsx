@@ -9,7 +9,7 @@ import { roomId as roomIdStore } from "@/store"
 import Playlist from "@/components/Playlist"
 import Listeners from "@/components/Listeners"
 
-export default function({ roomId, songs }: { roomId: string, songs: Song[] }) {
+export default function({ roomId, songs, playlistName }: { roomId: string, songs: Song[], playlistName: string }) {
   const [listenerUsers, setListenerUsers] = useState<ListenerUser[]>([])
   const [,setRoomIdState] = useAtom(roomIdStore) 
 
@@ -30,7 +30,7 @@ export default function({ roomId, songs }: { roomId: string, songs: Song[] }) {
 
   return (
     <div className="flex">
-      <Playlist playlist={songs} className="flex-1" />
+      <Playlist playlist={songs} className="flex-1" playlistName={playlistName} />
       <Listeners listeners={listenerUsers} />
     </div>
   )

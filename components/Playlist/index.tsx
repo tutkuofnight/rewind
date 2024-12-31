@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
 import { Song } from "@/types"
 
-export default function Playlist({ playlist, className }: { playlist: Song[], className?: string }) {
+export default function Playlist({ playlist, className, playlistName }: { playlist: Song[], className?: string, playlistName?: string }) {
   const { setTrack } = useSocket()
   const { data: session } = useSession()
   const { toast } = useToast()
@@ -31,7 +31,7 @@ export default function Playlist({ playlist, className }: { playlist: Song[], cl
   return (
     <section className={className}>
       <div className="flex items-center justify-between">
-        <h1 className="text-sm font-bold my-3 p-1 px-2 bg-black text-white inline-block rounded-lg">Your Playlist</h1>
+        <h1 className="text-sm font-bold my-3 p-1 px-2 bg-black text-white inline-block rounded-lg">{playlistName ? playlistName : "Your Playlist"}</h1>
           { !pathname.includes("room") && <Button variant={"outline"} onClick={handleCreateRoom}>
             Create Room
             <StepForward />
