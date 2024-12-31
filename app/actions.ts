@@ -56,8 +56,3 @@ export const setCookie = async (userId: string) => {
     path: '/',
   })
 }
-
-export const getPlaylist = async (userId?: string): Promise<Song[]> => {
-  const result = db.prepare("SELECT * FROM songs").all() as Song[]
-  return result
-}

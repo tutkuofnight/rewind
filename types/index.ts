@@ -10,6 +10,7 @@ export type Song = {
     artist: string
     featurings: string
     song: string
+    userId: string
 }
 export type PlayerState = {
     isPlaying?: boolean | null,

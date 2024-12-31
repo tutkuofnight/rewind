@@ -7,21 +7,15 @@ import { useToast } from "@/hooks/use-toast"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-import { getPlaylist } from "@/app/actions"
 import { usePathname } from "next/navigation"
 import { Song } from "@/types"
 
-export default function Playlist({ className }: { className?: string }) {
+export default function Playlist({ playlist, className }: { playlist: Song[], className?: string }) {
   const { setTrack } = useSocket()
   const { data: session } = useSession()
   const { toast } = useToast()
   const router = useRouter()
   const pathname = usePathname()
-  const [playlist, setPlaylist] = useState<Song[]>([])
-  
-  const isInRoom = (): boolean => {
-    return pathname.includes("room")
-  }
   
   const handleCreateRoom = () => {
     const link = window.location.origin + "/app/join/" + session?.user.id
@@ -33,20 +27,12 @@ export default function Playlist({ className }: { className?: string }) {
     router.push("/app/room/" + session?.user.id)
   }
 
-  useEffect(() => {
-    const loadData = async () => {
-      const data = await getPlaylist(session?.user.id!)
-      setPlaylist(data)
-    }
-    loadData()
-  }, [])
-
 
   return (
     <section className={className}>
       <div className="flex items-center justify-between">
         <h1 className="text-sm font-bold my-3 p-1 px-2 bg-black text-white inline-block rounded-lg">Your Playlist</h1>
-          { !isInRoom && <Button variant={"outline"} onClick={handleCreateRoom}>
+          { !pathname.includes("room") && <Button variant={"outline"} onClick={handleCreateRoom}>
             Create Room
             <StepForward />
           </Button> }
@@ -58,6 +44,7 @@ export default function Playlist({ className }: { className?: string }) {
           </Card>
         </div>
       ))}
+      { !playlist && <p>You don't have any uploaded songs your playlist. Please upload before </p> }
     </section>
   );
 }

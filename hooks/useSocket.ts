@@ -5,7 +5,7 @@ import io from "socket.io-client"
 import { currentPlaying, playerState, roomId } from "@/store"
 import { useAtom } from "jotai"
 
-const socket = io("ws://localhost:3001");
+const socket = io(process.env.NEXT_PUBLIC_WS_URL);
 
 const useSocket = () => {
   const [currentTrack, setCurrentTrack] = useAtom(currentPlaying)

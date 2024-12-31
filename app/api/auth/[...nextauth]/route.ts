@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import db from "@/config/db"
 import { ExtendedProfile, User } from "@/types"
-
+import { setCookie } from "@/app/actions"
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -14,6 +14,7 @@ const handler = NextAuth({
     async session({ session, token }): Promise<any> {
       const user = await db.prepare("SELECT * FROM users WHERE id = ?").get(token.id) as User
       session.user = user
+      await setCookie(user.id)
       return session
     },
     async jwt({ token, account, profile }) {

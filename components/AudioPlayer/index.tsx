@@ -12,9 +12,7 @@ export default function () {
   useEffect(() => {
     const audio: any = audioRef.current
     if (audio) {
-      const handleLoadedMetadata = (e: any) => {
-        console.log(e)
-        const audio = audioRef.current;
+      const handleLoadedMetadata = () => {
         audio?.play()
       };
   

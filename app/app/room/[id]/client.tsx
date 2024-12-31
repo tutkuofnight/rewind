@@ -17,20 +17,20 @@ export default function({ roomId, songs }: { roomId: string, songs: Song[] }) {
   const { joinRoom, socket } = useSocket()
   
   setRoomIdState(roomId)
-  joinRoom({ user: { name: session?.user.name as string, image: session?.user.image as string }, room: roomId})
   
   useEffect(() => {
-    if (session?.user){
-      socket.on("joinedUser", (data) => {
-        console.log(data)
-        // setListenerUsers([...listenerUsers, data.user])
-      })
+    if (session?.user) {
+      joinRoom({ user: { name: session?.user.name as string, image: session?.user.image as string }, room: roomId})
     }
+    socket.on("joinedUser", (data) => {
+      console.log(data)
+      // setListenerUsers([...listenerUsers, data.user])
+    })
   }, [])
 
   return (
     <div className="flex">
-      <Playlist className="flex-1" />
+      <Playlist playlist={songs} className="flex-1" />
       <Listeners listeners={listenerUsers} />
     </div>
   )
