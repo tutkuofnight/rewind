@@ -7,7 +7,7 @@ const app = express()
 const server = createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000", "https://secret-rewind.vercel.app"],
+        origin: "https://secret-rewind.vercel.app",
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type"],
         credentials: true
