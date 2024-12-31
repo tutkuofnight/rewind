@@ -8,11 +8,10 @@ import { useEffect } from "react"
 export default function Auth() {
   const router = useRouter()
   const { data:session } = useSession() 
-  useEffect(() => {
-    if(session && session.user) {
-      router.push('/app')
-    }
-  }, [])
+  
+  if(session && session.user) {
+    router.push('/app')
+  }
   
   return (
     <Button onClick={() => signIn("google")}>
